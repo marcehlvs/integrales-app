@@ -38,5 +38,17 @@ svg.g { width: 100%; height: auto; display: block; }
 .progress { height: 6px; background: var(--line); border-radius: 3px; margin: 6px 0 10px; }
 .progress i { display: block; height: 100%; background: var(--curve); border-radius: 3px; transition: width 0.25s; }
 .nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
+h3 { font-size: 1.05rem; margin: 16px 0 4px; }
+input[type="text"] { font: inherit; padding: 7px 10px; width: 100%; border: 2px solid var(--fg); border-radius: 6px; background: var(--card); color: var(--fg); }
+select.ok, input.ok { border-color: var(--good); }
+select.bad, input.bad { border-color: var(--curve); }
+.ej { border: 2px solid var(--line); border-radius: 6px; padding: 8px 12px 10px; margin: 10px 0; }
+.ej label { flex: 1 1 150px; }
+.pasos { list-style: none; counter-reset: paso; padding: 0; margin: 8px 0; }
+.pasos li { counter-increment: paso; position: relative; padding-left: 38px; margin: 10px 0; }
+.pasos li::before { content: counter(paso); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--fg); color: var(--bg); display: grid; place-items: center; font-weight: 700; }
+.tabla { border-collapse: collapse; width: 100%; margin: 10px 0; text-align: right; }
+.tabla th, .tabla td { border: 2px solid var(--line); padding: 5px 10px; }
+.tabla th { background: var(--soft); font-size: 0.85rem; }
 button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--curve); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
