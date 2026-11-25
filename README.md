@@ -1,6 +1,6 @@
 # integrales-app · «Aproximá el área bajo la curva»
 
-App interactiva (React + Vite + KaTeX) para introducir la **integral definida** en 6.º año de secundaria. Va de lo concreto a lo abstracto, en 8 pasos con botón «Siguiente».
+App interactiva (React + Vite + KaTeX) para introducir la **integral definida** en 6.º año de secundaria. Va de lo concreto a lo abstracto, en 8 pasos con botón «Siguiente». Tiene tres pestañas: **Integral definida** (los 8 pasos), **Área entre curvas** e **Indefinidas** (sustitución y por partes).
 
 ## Recorrido didáctico
 
@@ -14,6 +14,15 @@ App interactiva (React + Vite + KaTeX) para introducir la **integral definida** 
 8. **Para profundizar:** velocidad y distancia, propiedades, área con signo, ejemplos y práctica (desplegables).
 
 Cada paso tiene una pregunta para anotar en la carpeta y la respuesta oculta en un desplegable.
+
+## Área entre curvas
+
+Explicación con gráfico (vistas: las dos curvas, área bajo f, área bajo g, área entre las curvas y diferencia f − g, con franjas verticales ajustables), dos ejemplos resueltos paso a paso (cortes, quién va arriba, restar, integrar) y 4 ejercicios con corrección automática. En cada ejercicio se pueden activar las gráficas de f y g, marcar la región y ver el gráfico de f − g.
+
+## Integrales indefinidas
+
+- **Sustitución:** método en 5 pasos, 3 ejemplos resueltos con verificación por derivación y 5 ejercicios (elegir u, du y resultado).
+- **Por partes:** fórmula, regla LIATE, 4 ejemplos resueltos (incluido uno que se aplica dos veces) y 4 ejercicios (u, dv, du, v y resultado).
 
 ## Puesta en marcha
 
@@ -34,7 +43,10 @@ integrales-app/
 ├── vite.config.js
 └── src/
     ├── main.jsx     # entrada; importa el CSS de KaTeX
-    ├── App.jsx      # pasos, gráfico SVG y cálculo de sumas de Riemann
+    ├── App.jsx      # pestañas + integral definida (pasos, gráfico SVG, sumas de Riemann)
+    ├── AreaEntreCurvas.jsx  # gráfico genérico, ejemplos y ejercicios de área entre curvas
+    ├── Indefinidas.jsx      # sustitución y partes: ejemplos y ejercicios
+    ├── shared.jsx   # KaTeX, opciones con fórmulas y componente de ejercicio con corrección
     └── styles.css   # estilos (modo claro y oscuro)
 ```
 
@@ -47,4 +59,5 @@ Se escriben dentro de los textos con `$...$` (en línea) y `$$...$$` (en bloque)
 - [x] Paso sobre el límite: tabla con n = 1, 10, 100, 1000 y la suma acercándose al área.
 - [x] Barrow paso a paso (primitiva, evaluar, restar) con ejercicios para completar.
 - [ ] Área con signo y funciones negativas.
-- [ ] Área entre dos curvas.
+- [x] Área entre dos curvas.
+- [x] Integrales indefinidas: sustitución y por partes.

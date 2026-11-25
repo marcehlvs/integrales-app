@@ -1,16 +1,7 @@
 import { useMemo, useRef, useState } from "react";
-import katex from "katex";
-
-const R = String.raw;
-const fm = (v, d = 4) => v.toFixed(d).replace(".", ",");
-
-/* Renderiza HTML con fórmulas LaTeX: $...$ en línea y $$...$$ en bloque */
-const toHtml = (t) =>
-  t
-    .replace(/\$\$([^$]+)\$\$/g, (_, x) => katex.renderToString(x, { displayMode: true, throwOnError: false }))
-    .replace(/\$([^$]+)\$/g, (_, x) => katex.renderToString(x, { throwOnError: false }));
-const M = ({ t, as: Tag = "span" }) => <Tag dangerouslySetInnerHTML={{ __html: toHtml(t) }} />;
-const Soft = ({ t }) => <div className="soft"><M t={t} /></div>;
+import { R, fm, M, Soft, Q, num } from "./shared.jsx";
+import AreaEntreCurvas from "./AreaEntreCurvas.jsx";
+import Indefinidas from "./Indefinidas.jsx";
 
 const FUNS = {
   x2: { l: "f(x) = x²", f: (x) => x * x, P: (x) => x ** 3 / 3, a: 0, b: 3, y: 9,
@@ -39,15 +30,6 @@ const EJ = [
   { f: R`\int_1^3 (x+1)\,dx`, ops: ["x² + x", "1", "x²/2 + x"], ok: 2, fb: 7.5, fa: 1.5, r: 6,
     sol: R`$$F(x)=\tfrac{x^2}{2}+x\qquad F(3)=\tfrac{9}{2}+3=7{,}5\qquad F(1)=\tfrac{1}{2}+1=1{,}5\qquad \int_1^3 (x+1)\,dx=7{,}5-1{,}5=6$$` },
 ];
-
-/* Convierte lo que escribe el alumno: admite coma decimal y fracciones a/b */
-function num(s) {
-  const t = s.trim().replace(",", ".").replace("−", "-");
-  if (!t) return NaN;
-  const f = t.split("/");
-  if (f.length === 2) return Number(f[0]) / Number(f[1]);
-  return f.length === 1 ? Number(t) : NaN;
-}
 
 function calc(c, n, m) {
   const dx = (c.b - c.a) / n;
@@ -105,8 +87,6 @@ function Chart({ c, r, n }) {
   );
 }
 
-const Q = ({ children }) => <div className="q"><b>Anotá:</b> {children}</div>;
-
 /* Ejercicio de Barrow con campos para completar y corrección automática */
 function Ejercicio({ e, i }) {
   const [v, setV] = useState({ p: "", b: "", a: "", r: "" });
@@ -150,7 +130,7 @@ function Ejercicio({ e, i }) {
   );
 }
 
-export default function App() {
+function Definida() {
   const [step, setStep] = useState(1);
   const [n, setN] = useState(3);
   const [m, setM] = useState("d");
@@ -177,7 +157,7 @@ export default function App() {
   const hideExact = (step === 1 && !rev) || (step === 4 && !rev4);
 
   return (
-    <main>
+    <>
       <h1>Aproximá el área bajo la curva</h1>
 
       <section className="card">
@@ -316,6 +296,29 @@ export default function App() {
           {step < 8 && <button className="primary" onClick={next}>Siguiente</button>}
         </div>
       </section>
+    </>
+  );
+}
+const PARTES = [
+  ["def", "Integral definida"],
+  ["area", "Área entre curvas"],
+  ["indef", "Indefinidas: sustitución y partes"],
+];
+
+export default function App() {
+  const [parte, setParte] = useState("def");
+  /* Las tres partes quedan montadas (solo se ocultan) para no perder el avance al cambiar de pestaña */
+  return (
+    <main>
+      <nav className="tabs" aria-label="Partes de la app">
+        {PARTES.map(([id, t]) => (
+          <button key={id} className={id === parte ? "on" : ""} aria-current={id === parte ? "page" : undefined}
+            onClick={() => { setParte(id); window.scrollTo({ top: 0 }); }}>{t}</button>
+        ))}
+      </nav>
+      <div hidden={parte !== "def"}><Definida /></div>
+      <div hidden={parte !== "area"}><AreaEntreCurvas /></div>
+      <div hidden={parte !== "indef"}><Indefinidas /></div>
     </main>
   );
 }

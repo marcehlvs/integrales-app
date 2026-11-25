@@ -52,3 +52,22 @@ select.bad, input.bad { border-color: var(--curve); }
 .tabla th { background: var(--soft); font-size: 0.85rem; }
 button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--curve); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
+
+/* ---- Pestañas, opciones con fórmulas y leyendas (áreas entre curvas e indefinidas) ---- */
+:root { --g: #5b4bd1; }
+@media (prefers-color-scheme: dark) { :root { --g: #a99cff; } }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 14px; }
+.tabs button { flex: 1 1 150px; font-weight: 700; }
+.tabs button.on { background: var(--fg); color: var(--bg); }
+.leyenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.9rem; margin: 4px 0 6px; }
+.leyenda i { display: inline-block; width: 22px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+fieldset.opts { border: 2px solid var(--line); border-radius: 6px; margin: 8px 0; padding: 4px 10px 8px; min-width: 0; }
+fieldset.opts legend { font-size: 0.9rem; font-weight: 700; padding: 0 4px; }
+fieldset.opts .row { margin: 2px 0 0; }
+fieldset.ok { border-color: var(--good); }
+fieldset.bad { border-color: var(--curve); }
+label.op { flex: 0 1 auto; flex-direction: row; align-items: center; gap: 6px; padding: 4px 10px; border: 2px solid var(--line); border-radius: 6px; cursor: pointer; font-size: 1rem; }
+label.op:has(input:checked) { border-color: var(--fg); background: var(--soft); }
+label.op:has(input:focus-visible) { outline: 3px solid var(--curve); outline-offset: 2px; }
+label.nlabel { max-width: 340px; margin: 8px 0; }
+.ej .row .chip { margin: 0 2px 0 0; }
